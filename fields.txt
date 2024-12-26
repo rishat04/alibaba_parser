@@ -1,0 +1,17 @@
+product_link
+product_name
+product_photo
+min_price
+max_price
+min_amount
+review_count
+product_weight
+seller_name
+seller_status
+seller_country
+on_alibaba
+delivery_speed
+seller_raiting
+sales_raiting
+export_sum
+parsing_date
