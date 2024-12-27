@@ -6,6 +6,7 @@ from requests import Session
 from bs4 import BeautifulSoup
 from lxml import etree
 from playwright.sync_api import sync_playwright
+from playwright_stealth import stealth_sync
 
 
 session = Session()
@@ -58,14 +59,17 @@ def search_image_on_alibaba(image_path):
         f.write(url)
 
     response = session.get(url, headers=headers)
+    
     if 'captcha' in response.text:
         print(12312)
         with sync_playwright() as p:
             browser = p.firefox.launch(headless = False)
             context = browser.new_context()
             page = context.new_page()
+            stealth_sync(page)
+            # page.add_init_script('Object.defineProperty(navigator,"webdriver",{get: () => undefined})')
             page.goto(url)
-            page.wait_for_selector("//span[contains(@id, 'nc_1_n1z')]", timeout=10000)
+            # page.wait_for_selector("//span[contains(@id, 'nc_1_n1z')]", timeout=10000)
             # page.("//span[contains(@id, 'nc_1_n1z')]")
             # slider = page.locator("//span[contains(@id, 'nc_1__scale_text')]").bounding_box()
             handle = page.locator("//span[contains(@id, 'nc_1_n1z')]").bounding_box()
